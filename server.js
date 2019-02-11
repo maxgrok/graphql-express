@@ -3,8 +3,8 @@ const expressGraphQL = require('express-graphql');
 
 const app = express();
 
-app.use('/graphql', expressGraphQL({
-	graphiql: true //only intended for use in dev environment
+app.use('/graphql', expressGraphQL({ // app.use is how we wire up middleware to an express application
+	graphiql: true //only intended for use in dev environment // need to include a schema in this section as well as options
 }));
 
 app.listen(4000, ()=>{
