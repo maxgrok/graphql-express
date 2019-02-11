@@ -5,7 +5,7 @@ const expressGraphQL = require('express-graphql');
 const app = express();
 
 app.use('/graphql', expressGraphQL({
-	graphiql: true
+	graphiql: true //only intended for use in dev environment
 });
 
 app.listen(4000, ()=>{
