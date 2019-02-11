@@ -10,9 +10,9 @@ const graphql = require('graphql');
 const _ = require('lodash');
 
 const {
-    GraphQLObjectType //correct capitalization is important //instructs graphql of the presence of a user (id, firstName)
+    GraphQLObjectType, //correct capitalization is important //instructs graphql of the presence of a user (id, firstName)
     GraphQLString, //types of data imported string
-    GraphQLInt // type of data imported integer
+    GraphQLInt, // type of data imported integer
     GraphQLSchema //takes in rootquery and returns a schema
 } = graphql;
 
@@ -20,14 +20,14 @@ const users = [//adding hard coded data for resolve
     { id: '23', firstName: 'Bill', age: 20 },
     { id: '47', firstName: 'Samantha', age: 21 }
 ]
-const UserType = new GraphQLObjectType({ //this object instructs graphql what a user object looks like
-        name: 'User' //string describing the type you define //capitalize the name string User
+const UserType = new GraphQLObjectType({ 
+        name: 'User', //string describing the type you define. capitalize the name string User
         fields: { //most important property here, tells graphql all the properties that the user has
             id: { type: GraphQLString }, //type of value required, in this case string
             firstName: { type: GraphQLString }, //type string
         age: { type: GraphQLInt } // integer type
         }
-}); //instructs graphql that it has User type. 
+}); //instructs graphql that it has User type. //this object instructs graphql what a user object looks like
 
 // all the schemas we build look similar to each other. 
 
