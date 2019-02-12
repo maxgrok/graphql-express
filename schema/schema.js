@@ -30,7 +30,14 @@ const UserType = new GraphQLObjectType({
         fields: { //most important property here, tells graphql all the properties that the user has
             id: { type: GraphQLString }, //type of value required, in this case string
             firstName: { type: GraphQLString }, //type string
-        age: { type: GraphQLInt } // integer type
+        age: { type: GraphQLInt }, // integer type
+        company: {
+            type: CompanyType,
+            resolve(parentValue, args){
+                return axios.get(`http://localhost:3000/companies/${parentValue.companyId}`
+                .then(resp => resp.data);
+            }
+        }
         }
 }); //instructs graphql that it has User type. //this object instructs graphql what a user object looks like
 
