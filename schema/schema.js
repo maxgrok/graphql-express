@@ -39,7 +39,8 @@ const RootQuery = new GraphQLObjectType({ // graphql object type just like user 
 
                 // first argument == never really being used 
                 // second argument args were passed into the original query 
-                return axios.get(`http://localhost:3000/users/${args.id}`) //axios is a replacement for fetch
+                return axios.get(`http://localhost:3000/users/${args.id}`) //axios is a replacement for fetch, when the promise resolves it has the actual response nested on the data object. Bad news: graphql does not know the data is nested....
+                .then(resp => resp.data); //says make the request, then before anything happesn with teh promise, take only response and return resp.data. so only see the data that came back from the response. 
                 
             } // give me the id of the user you are looking for then return the user you are looking for. args specified what arguments are required for the root query
         }
