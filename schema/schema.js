@@ -82,7 +82,17 @@ const RootQuery = new GraphQLObjectType({ // graphql object type just like user 
 const mutation = new GraphQLObjectType({
     name: 'Mutation',
     fields: {
-        
+        addUser:{ //name of mutation describes mutation that will take place
+            type: UserType, //type of data that you will return from the resolve function, however sometimes when mutation might not be the same as the data  
+            args: {
+                firstName: {type: GraphQLString},
+                age: {type: GraphQLInt},
+                companyId: {type: GraphQLString }
+            }, 
+            resolve(parentValue, args){
+
+            }
+        }
     }
 })
 module.exports = new GraphQLSchema({//make this exportable 
