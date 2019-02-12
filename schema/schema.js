@@ -13,32 +13,40 @@ const {
     GraphQLObjectType, //correct capitalization is important //instructs graphql of the presence of a user (id, firstName)
     GraphQLString, //types of data imported string
     GraphQLInt, // type of data imported integer
-    GraphQLSchema //takes in rootquery and returns a schema
+    GraphQLSchema, //takes in rootquery and returns a schema
+    GraphQLList //tells GraphQL to expect a list of objects
 } = graphql;
 
 const CompanyType = new GraphQLObjectType({
         name: 'Company',
-        fields: {
+        fields: () => ({
             id: { type: GraphQLString },
             name: { type: GraphQLString },
-            description: {type: GraphQLString }
-        }
+            description: {type: GraphQLString },
+            users:{
+                type: new GraphQLList(UserType), //expect a list of users associated with a single company
+                resolve(parentValue, args){
+                    return axios.get(`http://localhost:3000/companies/${parentValue.id}/users`)
+                    .then(resp => resp.data);
+                }
+            }
+        })
 }) //must be defined before the UserType
 
 const UserType = new GraphQLObjectType({ 
         name: 'User', //string describing the type you define. capitalize the name string User
-        fields: { //most important property here, tells graphql all the properties that the user has
+        fields: () => ({ //most important property here, tells graphql all the properties that the user has
             id: { type: GraphQLString }, //type of value required, in this case string
             firstName: { type: GraphQLString }, //type string
         age: { type: GraphQLInt }, // integer type
         company: {
             type: CompanyType,
             resolve(parentValue, args){
-                return axios.get(`http://localhost:3000/companies/${parentValue.companyId}`
+                return axios.get(`http://localhost:3000/companies/${parentValue.companyId}`)
                 .then(resp => resp.data);
             }
-        }
-        }
+          }
+        })
 }); //instructs graphql that it has User type. //this object instructs graphql what a user object looks like
 
 // all the schemas we build look similar to each other. 
@@ -59,6 +67,14 @@ const RootQuery = new GraphQLObjectType({ // graphql object type just like user 
                 .then(resp => resp.data); //says make the request, then before anything happesn with teh promise, take only response and return resp.data. so only see the data that came back from the response. 
                 
             } // give me the id of the user you are looking for then return the user you are looking for. args specified what arguments are required for the root query
+        },
+        company: {
+            type: CompanyType, 
+            args: {id: {type: GraphQLString }},
+            resolve(parentValue, args){
+                return axios.get(`http://localhost:3000/companies/${args.id}`)
+                .then(resp => resp.data); //only return the data not the entire response object
+            }
         }
     }
 });
