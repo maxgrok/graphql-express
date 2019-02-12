@@ -16,6 +16,15 @@ const {
     GraphQLSchema //takes in rootquery and returns a schema
 } = graphql;
 
+const CompanyType = new GraphQLObjectType({
+        name: 'Company',
+        fields: {
+            id: { type: GraphQLString },
+            name: { type: GraphQLString },
+            description: {type: GraphQLString }
+        }
+}) //must be defined before the UserType
+
 const UserType = new GraphQLObjectType({ 
         name: 'User', //string describing the type you define. capitalize the name string User
         fields: { //most important property here, tells graphql all the properties that the user has
