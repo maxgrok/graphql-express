@@ -14,7 +14,8 @@ const {
     GraphQLString, //types of data imported string
     GraphQLInt, // type of data imported integer
     GraphQLSchema, //takes in rootquery and returns a schema
-    GraphQLList //tells GraphQL to expect a list of objects
+    GraphQLList, //tells GraphQL to expect a list of objects
+    GraphQLNonNull
 } = graphql;
 
 const CompanyType = new GraphQLObjectType({
@@ -84,10 +85,10 @@ const mutation = new GraphQLObjectType({
     fields: {
         addUser:{ //name of mutation describes mutation that will take place
             type: UserType, //type of data that you will return from the resolve function, however sometimes when mutation might not be the same as the data  
-            args: {
-                firstName: {type: GraphQLString},
-                age: {type: GraphQLInt},
-                companyId: {type: GraphQLString }
+            args: { // all the same required fields as User 
+                firstName: {type: new GraphQLNonNull(GraphQLString)}, //non null requires that someone provide a value for the field
+                age: {type: new GraphQLNonNull(GraphQLInt)},
+                companyId: {type:  new GraphQLNonNull(GraphQLString) }
             }, 
             resolve(parentValue, args){
 
