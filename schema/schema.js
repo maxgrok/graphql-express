@@ -43,7 +43,7 @@ const RootQuery = new GraphQLObjectType({ // graphql object type just like user 
 
                 // first argument == never really being used 
                 // second argument args were passed into the original query 
-                return _.find(users, {id: args.id }); //walking through all users, find and return the first user that has an id that was given to the resolve function
+                return _.find(users, {id: args.id }); // returns a raw javascript object or JSON for resolve functions, walking through all users, find and return the first user that has an id that was given to the resolve function
                 
             } // give me the id of the user you are looking for then return the user you are looking for. args specified what arguments are required for the root query
         }
