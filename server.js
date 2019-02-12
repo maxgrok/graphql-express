@@ -9,6 +9,6 @@ app.use('/graphql', expressGraphQL({ // app.use is how we wire up middleware to 
 	graphiql: true //only intended for use in dev environment // need to include a schema in this section as well as options
 }));
 
-app.listen(4000, ()=>{
+app.listen(4000, () => {
 	console.log('Listening');
 })

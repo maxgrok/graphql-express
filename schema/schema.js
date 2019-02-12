@@ -50,6 +50,6 @@ const RootQuery = new GraphQLObjectType({ // graphql object type just like user 
     }
 });
 
-module.exports = new  GraphQLSchema({//make this exportable 
+module.exports = new GraphQLSchema({//make this exportable 
     query: RootQuery
 });
